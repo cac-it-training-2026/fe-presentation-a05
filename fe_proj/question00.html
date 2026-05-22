@@ -3,21 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>ドラッグ＆ドロップ穴埋めクイズ</title>
+    <link rel="stylesheet" href="style.css" />
     <style>
-        body {
-            font-family: sans-serif;
-            line-height: 2;
-            padding: 20px;
-            background-color: #f9f9f9;
-        }
-        .quiz-container {
-            background: #fff;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            max-width: 650px;
-            margin: 0 auto;
-        }
         /* 単語チップのエリア */
         .word-bank {
             display: flex;
@@ -69,6 +56,7 @@
             background-color: #f8d7da !important;
             border-color: #dc3545 !important;
         }
+<<<<<<< HEAD
         button {
             margin-top: 20px;
             padding: 10px 20px;
@@ -87,6 +75,8 @@
             font-weight: bold;
             font-size: 18px;
         }
+=======
+>>>>>>> branch 'main' of https://github.com/cac-it-training-2026/fe-presentation-a05.git
     </style>
 </head>
 <body>
@@ -115,6 +105,18 @@
 
     <button onclick="checkAnswers()">答え合わせ</button>
     <div id="result"></div>
+    <div class="answer-content" id="answer" hidden>
+        <p class="correct-answer">
+          	<strong>正解：2. Hyper Text Markup Language</strong>
+        </p>
+        <p class="explanation">
+        	<strong>解説：</strong><br />
+            	HTMLは「Hyper Text Markupです
+            	Language（ハイパーテキスト・マークアップ・ランゲージ）」の略です。Webページの構造を作成するための言語として使用されます。
+            	<br>
+            	<a href="question1.html">次の問題へ</a>
+        </p>
+	</div>
 
 </div>
 
@@ -187,6 +189,8 @@ function checkAnswers() {
 
     const resultDiv = document.getElementById('result');
     resultDiv.textContent = `${zones.length}問中、${score}問正解です！`;
+    const answer = document.getElementById("answer");
+    answer.removeAttribute('hidden');
 }
 </script>
 

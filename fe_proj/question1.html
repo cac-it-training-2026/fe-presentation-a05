@@ -7,94 +7,63 @@
     </head>
     <body>
 
-
 <div class="quiz-container">
-
 <h2 class="quiz-question">
 HTML・CSS・JavaScriptの役割を結びましょう
 </h2>
-
 <div class="match-container" id="container">
-
 <svg id="svg"></svg>
 
 <!-- 左 -->
 
 <div class="column">
-
 <div class="item left" data-id="A">
-HTML
+RPA
 </div>
-
 <div class="item left" data-id="B">
-CSS
+SFA／CRM
 </div>
-
 <div class="item left" data-id="C">
-JavaScript
+SCM
 </div>
-
 </div>
-
 
 <!-- 右 -->
 
 <div class="column">
-
 <div class="item right" data-id="1">
-動きをつける
+サプライチェーンの最適化
 </div>
-
 <div class="item right" data-id="2">
-Webページの骨組み
+定型業務の自動化
 </div>
-
 <div class="item right" data-id="3">
-デザイン
+顧客情報を一元化
 </div>
-
 </div>
-
 </div>
-
 
 <div class="button-area">
-
     <button onclick="checkAnswer()">
         答え合わせ
     </button>
 
 </div>
 
-
 <div id="result"></div>
-
-
-<details class="quiz-answer">
-
-<summary>
-解説を見る
-</summary>
-
-<div class="answer-content">
-
-<p class="explanation">
-
-HTMLはWebページの構造を作る言語です。<br><br>
-
-CSSは色・レイアウト・サイズなど
-デザインを担当します。<br><br>
-
-JavaScriptはクリックイベントや
-アニメーションなど、
-Webページに動きをつけます。
-
-</p>
-
-</div>
-
-</details>
-
+<div class="answer-content" id="answer" hidden>
+        <p class="correct-answer">
+          	<strong>RPA↔定型業務の自動化</strong><br>
+          	<strong>SFA／CRM↔顧客情報を一元化</strong><br>
+          	<strong>SCM↔サプライチェーンの最適化 </strong>
+        </p>
+        <p class="explanation">
+        	<strong>解説：</strong><br />
+            	HTMLは「Hyper Text Markupです
+            	Language（ハイパーテキスト・マークアップ・ランゲージ）」の略です。Webページの構造を作成するための言語として使用されます。
+            	<br><a href="index.html">トップページへ</a>
+        </p>
+	</div>
 </div>
 
 <script>
@@ -258,38 +227,24 @@ function removeLineByRight(rightId){
 
 
 function checkAnswer(){
-
     let correct = true;
-
     for(let key in answers){
-
         if(connections[key] != answers[key]){
-
             correct = false;
-
         }
-
     }
-
     const result =
         document.getElementById("result");
-
     if(correct){
-
         result.innerHTML = "正解！";
         result.className = "correct";
-
     }else{
-
         result.innerHTML = "不正解";
         result.className = "incorrect";
-
     }
-
+    const answer = document.getElementById("answer");
+    answer.removeAttribute('hidden');
 }
-
 </script>
-
 </body>
-
 </html>
