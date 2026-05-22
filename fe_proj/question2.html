@@ -54,6 +54,13 @@
             font-weight: bold;
             font-size: 18px;
         }
+        .answer_button{
+		    padding: 12px 16px;
+    		font-weight: bold;
+    		color: #ffffff;
+    		background-color: #3498db;
+    		cursor: pointer;
+		}
     </style>
 </head>
 <body>
@@ -87,7 +94,7 @@
         を使います。
     </p>
 
-    <button onclick="checkAnswers()">答え合わせ</button>
+    <button onclick="checkAnswers()" class="answer_button">答え合わせ</button>
     <div id="result"></div>
    	<div class="answer-content" id="answer" hidden>
         <p class="correct-answer">
