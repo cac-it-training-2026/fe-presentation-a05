@@ -56,7 +56,6 @@
             background-color: #f8d7da !important;
             border-color: #dc3545 !important;
         }
-<<<<<<< HEAD
         button {
             margin-top: 20px;
             padding: 10px 20px;
@@ -75,8 +74,7 @@
             font-weight: bold;
             font-size: 18px;
         }
-=======
->>>>>>> branch 'main' of https://github.com/cac-it-training-2026/fe-presentation-a05.git
+
     </style>
 </head>
 <body>
@@ -86,33 +84,37 @@
     
     <!-- 単語置いておく場所 -->
     <div class="word-bank" id="wordBank" ondragover="allowDrop(event)" ondrop="dragToBank(event)">
-        <div class="word-chip" draggable="true" ondragstart="drag(event)" id="word1">HTML</div>
-        <div class="word-chip" draggable="true" ondragstart="drag(event)" id="word2">CSS</div>
-        <div class="word-chip" draggable="true" ondragstart="drag(event)" id="word3">JavaScript</div>
+        <div class="word-chip" draggable="true" ondragstart="drag(event)" id="word1">デジタルトランス​
+　フォーメーション</div>
+        <div class="word-chip" draggable="true" ondragstart="drag(event)" id="word2">デジタイゼーション</div>
+        <div class="word-chip" draggable="true" ondragstart="drag(event)" id="word3">デジタライゼーション</div>
     </div>
 
     <!-- 問題文 -->
+     
     <p>
-        Webページの骨組みを作るのは
-        <div class="drop-zone" ondragover="allowDrop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondrop="drop(event)" data-answer="word1"></div>
-        です。
-        見た目やデザインを整えるには
+        DX推進手順は「アナログ情報をデジタル化する、DXの土台づくる」
         <div class="drop-zone" ondragover="allowDrop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondrop="drop(event)" data-answer="word2"></div>
-        を使用し、ボタンをクリックしたときなどの「動き」をつけるには
+        から、
+        「デジタル技術で業務プロセス全体を効率化・改善する」​
         <div class="drop-zone" ondragover="allowDrop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondrop="drop(event)" data-answer="word3"></div>
-        を使います。
+        の段階を通り、最後に「データとデジタルで、ビジネスや組織そのものを変革する」
+        <div class="drop-zone" ondragover="allowDrop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondrop="drop(event)" data-answer="word1"></div>
+        に辿る。
     </p>
 
     <button onclick="checkAnswers()">答え合わせ</button>
     <div id="result"></div>
     <div class="answer-content" id="answer" hidden>
         <p class="correct-answer">
-          	<strong>正解：2. Hyper Text Markup Language</strong>
+          	<strong>正解：デジタイゼーション、デジタライゼーション、デジタルトランス​
+　フォーメーション</strong>
         </p>
         <p class="explanation">
         	<strong>解説：</strong><br />
-            	HTMLは「Hyper Text Markupです
-            	Language（ハイパーテキスト・マークアップ・ランゲージ）」の略です。Webページの構造を作成するための言語として使用されます。
+            	デジタイゼーション：「アナログ情報をデジタル化する,<br>
+            	DXの土台づくる」デジタライゼーション：「デジタル技術で業務プロセス全体を効率化・改善する」<br>
+            	デジタルトランス​フォーメーション：「データとデジタルで、ビジネスや組織そのものを変革する」
             	<br>
             	<a href="question1.html">次の問題へ</a>
         </p>
