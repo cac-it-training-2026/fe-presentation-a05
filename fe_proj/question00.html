@@ -1,46 +1,200 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
-    <head>
-        <meta charset="UTF-8" />
-        <title>HTML/CSS 4択問題</title>
-        <link rel="stylesheet" href="style.css" />
-    </head>
-    <body>
-        <div class="quiz-container">
-            <h3 class="quiz-question">問題1: HTMLの正式名称はどれですか？</h3>
+<head>
+    <meta charset="UTF-8">
+    <title>ドラッグ＆ドロップ穴埋めクイズ</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        /* 単語チップのエリア 　*/
+        .word-bank {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #eee;
+            border-radius: 6px;
+            min-height: 40px;
+        }
+        /* ドラッグできる単語チップ */
+        .word-chip {
+            background: #3498db;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: grab;
+            display: inline-block;
+            user-select: none;
+            line-height: 1.5;
+        }
+        .word-chip:active {
+            cursor: grabbing;
+        }
+        /* 文章の中の空欄（ドロップ先）*/
+        .drop-zone {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #999;
+            background: #fff;
+            min-width: 100px;
+            height: 30px;
+            vertical-align: middle;
+            margin: 0 5px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .drop-zone.hover {
+            background: #e0f0ff;
+            border-color: #3498db;
+        }
+        /* 正解・不正解のスタイル */
+        .correct {
+            background-color: #d4edda !important;
+            border-color: #28a745 !important;
+        }
+        .incorrect {
+            background-color: #f8d7da !important;
+            border-color: #dc3545 !important;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #3498db;
+        }
+        #result {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 18px;
+        }
 
-            <form class="quiz-options">
-                <label>
-                    <input type="radio" name="q1" value="1" /> 1. High Text
-                    Markup Language
-                </label>
-                <label>
-                    <input type="radio" name="q1" value="2" /> 2. Hyper Text
-                    Markup Language
-                </label>
-                <label>
-                    <input type="radio" name="q1" value="3" /> 3. Hyper Tool
-                    Multi Language
-                </label>
-                <label>
-                    <input type="radio" name="q1" value="4" /> 4. Hyper Text
-                    Make Language
-                </label>
-            </form>
+    </style>
+</head>
+<body>
 
-            <details class="quiz-answer">
-                <summary>解答と解説を見る</summary>
-                <div class="answer-content">
-                    <p class="correct-answer">
-                        <strong>正解：2. Hyper Text Markup Language</strong>
-                    </p>
-                    <p class="explanation">
-                        <strong>解説：</strong><br />
-                        HTMLは「Hyper Text Markup
-                        Language（ハイパーテキスト・マークアップ・ランゲージ）」の略です。Webページの構造を作成するための言語として使用されます。
-                    </p>
-                </div>
-            </details>
-        </div>
-    </body>
+<div class="quiz-container">
+    <h2>第3問： DXの推進手順</h2>
+    
+    <!-- 単語置いておく場所 -->
+    <div class="word-bank" id="wordBank" ondragover="allowDrop(event)" ondrop="dragToBank(event)">
+        <div class="word-chip" draggable="true" ondragstart="drag(event)" id="word1">デジタルトランス​
+　フォーメーション</div>
+        <div class="word-chip" draggable="true" ondragstart="drag(event)" id="word2">デジタイゼーション</div>
+        <div class="word-chip" draggable="true" ondragstart="drag(event)" id="word3">デジタライゼーション</div>
+    </div>
+
+    <!-- 問題文 -->
+     
+    <p>
+        DX推進手順は「アナログ情報をデジタル化する、DXの土台づくる」
+        <div class="drop-zone" ondragover="allowDrop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondrop="drop(event)" data-answer="word2"></div>
+        から、
+        「デジタル技術で業務プロセス全体を効率化・改善する」​
+        <div class="drop-zone" ondragover="allowDrop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondrop="drop(event)" data-answer="word3"></div>
+        の段階を通り、最後に「データとデジタルで、ビジネスや組織そのものを変革する」
+        <div class="drop-zone" ondragover="allowDrop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondrop="drop(event)" data-answer="word1"></div>
+        に辿る。
+    </p>
+
+    <button onclick="checkAnswers()">答え合わせ</button>
+    <div id="result"></div>
+    <div class="answer-content" id="answer" hidden>
+        <p class="correct-answer">
+          	<strong>正解：デジタイゼーション、デジタライゼーション、デジタルトランス​
+　フォーメーション</strong>
+        </p>
+        <p class="explanation">
+        	<strong>解説：</strong><br />
+            	デジタイゼーション：「アナログ情報をデジタル化する,DXの土台づくる」<br>
+            	デジタライゼーション：「デジタル技術で業務プロセス全体を効率化・改善する」<br>
+            	デジタルトランス​フォーメーション：「データとデジタルで、ビジネスや組織そのものを変革する」
+            	<br>
+            	<a href="index.html">トップページへ</a>
+        </p>
+	</div>
+
+</div>
+
+<script>
+// ドラッグ開始時：移動する要素のIDを記録
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+// ドロップを受け入れるための設定
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+// ドロップゾーンに要素が入った時（見た目の変更）
+function dragEnter(ev) {
+    if (ev.target.classList.contains('drop-zone') && ev.target.children.length === 0) {
+        ev.target.classList.add('hover');
+    }
+}
+
+// ドロップゾーンから要素が離れた時
+function dragLeave(ev) {
+    ev.target.classList.remove('hover');
+}
+
+// 空欄にドロップされた時の処理
+function drop(ev) {
+    ev.preventDefault();
+    const target = ev.target;
+    target.classList.remove('hover');
+    
+    // ドロップ先が空欄、かつ、まだ中に別の単語がない場合だけ受け入れる
+    if (target.classList.contains('drop-zone') && target.children.length === 0) {
+        const data = ev.dataTransfer.getData("text");
+        const draggedElement = document.getElementById(data);
+        target.appendChild(draggedElement);
+    }
+}
+
+// 上の単語エリアに戻された時の処理
+function dragToBank(ev) {
+    ev.preventDefault();
+    if (ev.target.id === "wordBank") {
+        const data = ev.dataTransfer.getData("text");
+        const draggedElement = document.getElementById(data);
+        ev.target.appendChild(draggedElement);
+    }
+}
+
+// 答え合わせ
+function checkAnswers() {
+    const zones = document.querySelectorAll('.drop-zone');
+    let score = 0;
+
+    zones.forEach(zone => {
+        zone.classList.remove('correct', 'incorrect');
+        
+        const correctAnswer = zone.getAttribute('data-answer');
+        const child = zone.firstElementChild; // 空欄の中にある要素
+
+        // 中身があり、そのIDが正解データと一致しているか
+        if (child && child.id === correctAnswer) {
+            zone.classList.add('correct');
+            score++;
+        } else {
+            zone.classList.add('incorrect');
+        }
+    });
+
+    const resultDiv = document.getElementById('result');
+    resultDiv.textContent = `${zones.length}問中、${score}問正解です！`;
+    const answer = document.getElementById("answer");
+    answer.removeAttribute('hidden');
+}
+</script>
+
+</body>
 </html>

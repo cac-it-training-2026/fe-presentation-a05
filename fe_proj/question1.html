@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <title>DX基本概念問題</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+
+<div class="quiz-container">
+<h2 class="quiz-question">
+第2問：それぞれ対応する語句とその説明文を結びましょう
+</h2>
+<div class="match-container" id="container">
+<svg id="svg"></svg>
+
+<!-- 左 -->
+
+<div class="column">
+<div class="item left" data-id="A">
+RPA
+</div>
+<div class="item left" data-id="B">
+SFA／CRM
+</div>
+<div class="item left" data-id="C">
+SCM
+</div>
+</div>
+
+<!-- 右 -->
+
+<div class="column">
+<div class="item right" data-id="1">
+サプライチェーンの最適化
+</div>
+<div class="item right" data-id="2">
+定型業務の自動化
+</div>
+<div class="item right" data-id="3">
+顧客情報を一元化
+</div>
+</div>
+</div>
+
+<div class="button-area">
+    <button onclick="checkAnswer()">
+        答え合わせ
+    </button>
+</div>
+
+<div id="result"></div>
+	<div class="answer-content" id="answer" hidden>
+        <p class="correct-answer">
+          	<strong>RPA      ↔ 定型業務の自動化</strong><br>
+          	<strong>SFA／CRM ↔ 顧客情報を一元化</strong><br>
+          	<strong>SCM      ↔ サプライチェーンの最適化 </strong>
+        </p>
+        <p class="explanation">
+			 <strong>解説：</strong><br />
+            	RPA(Robotic Process Automation)：パソコンで行っている事務作業を自動化できるソフトウェアロボット技術<br>
+            	SFA(Sales Force Automation)／CRM(Customer Relationship Management)：顧客データを活用して売り上げ拡大を図るツール<br>
+            	SCM(Supply Chain Management)：サプライヤーから消費者に至るサプライチェーン全体の最適化を目指して管理すること
+            	<br>
+           	<br><a href="question00.html">次の問題へ</a>
+           	<br>
+            	<a href="index.html">トップページへ</a>
+        </p>
+	</div>
+</div>
+<script>
+let selectedLeft = null;
+let selectedRight = null;
+const svg = document.getElementById("svg");
+const connections = {};
+const answers = {
+    "A":"2",
+    "B":"3",
+    "C":"1"
+};
+
+// 左選択
+
+document.querySelectorAll(".left").forEach(left=>{
+    left.addEventListener("click",()=>{
+		if(selectedRight == null){
+			document.querySelectorAll(".left")
+        	.forEach(l=>l.classList.remove("selected"));
+        	selectedLeft = left;
+        	left.classList.add("selected");
+			return;
+		}
+		const leftId =
+            left.dataset.id;
+        const rightId =
+            selectedRight.dataset.id;
+        removeLine(leftId);
+        removeLineByRight(rightId);
+        drawLine(left,selectedRight);
+        connections[leftId] = rightId;
+        selectedRight.classList.remove("selected");
+        selectedRight = null;
+    });
+});
+
+// 右選択
+
+document.querySelectorAll(".right").forEach(right=>{
+    right.addEventListener("click",()=>{
+        if(selectedLeft == null) {
+			document.querySelectorAll(".right")
+        	.forEach(l=>l.classList.remove("selected"));
+        	selectedRight = right;
+        	right.classList.add("selected");
+			return;
+		}
+        const leftId =
+            selectedLeft.dataset.id;
+        const rightId =
+            right.dataset.id;
+        removeLine(leftId);
+        removeLineByRight(rightId);
+        drawLine(selectedLeft,right);
+        connections[leftId] = rightId;
+        selectedLeft.classList.remove("selected");
+        selectedLeft = null;
+    });
+});
+
+function drawLine(left,right){
+    const rect1 =
+        left.getBoundingClientRect();
+    const rect2 =
+        right.getBoundingClientRect();
+    const containerRect =
+        document.getElementById("container")
+        .getBoundingClientRect();
+    const x1 =
+        rect1.right - containerRect.left;
+    const y1 =
+        rect1.top + rect1.height/2
+        - containerRect.top;
+    const x2 =
+        rect2.left - containerRect.left;
+    const y2 =
+        rect2.top + rect2.height/2
+        - containerRect.top;
+    const line =
+        document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "line"
+        );
+    line.setAttribute("x1",x1);
+    line.setAttribute("y1",y1);
+
+    line.setAttribute("x2",x2);
+    line.setAttribute("y2",y2);
+
+    line.setAttribute("stroke","#3498db");
+
+    line.setAttribute("stroke-width","4");
+
+    line.dataset.left =
+        left.dataset.id;
+    line.dataset.right =
+        right.dataset.id;
+    svg.appendChild(line);
+}
+
+
+function removeLine(leftId){
+    document.querySelectorAll("line")
+    .forEach(line=>{
+        if(line.dataset.left == leftId){
+            line.remove();
+        }
+    });
+}
+
+function removeLineByRight(rightId){
+    document.querySelectorAll("line")
+    .forEach(line=>{
+        if(line.dataset.right == rightId){
+            line.remove();
+        }
+    });
+}
+
+function checkAnswer(){
+    let correct = true;
+    for(let key in answers){
+        if(connections[key] != answers[key]){
+            correct = false;
+        }
+    }
+    const result =
+        document.getElementById("result");
+    if(correct){
+        result.innerHTML = "正解！";
+        result.className = "correct";
+    }else{
+        result.innerHTML = "不正解";
+        result.className = "incorrect";
+    }
+    const answer = document.getElementById("answer");
+    answer.removeAttribute('hidden');
+}
+</script>
+</body>
+</html>
