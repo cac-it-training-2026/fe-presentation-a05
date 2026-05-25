@@ -57,6 +57,11 @@ SCM
           	<strong>SCM      ↔ サプライチェーンの最適化 </strong>
         </p>
         <p class="explanation">
+			 <strong>解説：</strong><br />
+            	RPA(Robotic Process Automation)：パソコンで行っている事務作業を自動化できるソフトウェアロボット技術<br>
+            	SFA(Sales Force Automation)／CRM(Customer Relationship Management)：顧客データを活用して売り上げ拡大を図るツール<br>
+            	SCM(Supply Chain Management)：サプライヤーから消費者に至るサプライチェーン全体の最適化を目指して管理すること
+            	<br>
            	<br><a href="question00.html">次の問題へ</a>
            	<br>
             	<a href="index.html">トップページへ</a>
@@ -65,6 +70,7 @@ SCM
 </div>
 <script>
 let selectedLeft = null;
+let selectedRight = null;
 const svg = document.getElementById("svg");
 const connections = {};
 const answers = {
@@ -77,10 +83,23 @@ const answers = {
 
 document.querySelectorAll(".left").forEach(left=>{
     left.addEventListener("click",()=>{
-        document.querySelectorAll(".left")
-        .forEach(l=>l.classList.remove("selected"));
-        selectedLeft = left;
-        left.classList.add("selected");
+		if(selectedRight == null){
+			document.querySelectorAll(".left")
+        	.forEach(l=>l.classList.remove("selected"));
+        	selectedLeft = left;
+        	left.classList.add("selected");
+			return;
+		}
+		const leftId =
+            left.dataset.id;
+        const rightId =
+            selectedRight.dataset.id;
+        removeLine(leftId);
+        removeLineByRight(rightId);
+        drawLine(left,selectedRight);
+        connections[leftId] = rightId;
+        selectedRight.classList.remove("selected");
+        selectedRight = null;
     });
 });
 
@@ -88,7 +107,13 @@ document.querySelectorAll(".left").forEach(left=>{
 
 document.querySelectorAll(".right").forEach(right=>{
     right.addEventListener("click",()=>{
-        if(selectedLeft == null) return;
+        if(selectedLeft == null) {
+			document.querySelectorAll(".right")
+        	.forEach(l=>l.classList.remove("selected"));
+        	selectedRight = right;
+        	left.classList.add("selected");
+			return;
+		}
         const leftId =
             selectedLeft.dataset.id;
         const rightId =
