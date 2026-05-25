@@ -9,7 +9,7 @@
 
 <div class="quiz-container">
 <h2 class="quiz-question">
-HTML・CSS・JavaScriptの役割を結びましょう
+それぞれ対応する語句とその説明文を結びましょう
 </h2>
 <div class="match-container" id="container">
 <svg id="svg"></svg>
@@ -47,127 +47,82 @@ SCM
     <button onclick="checkAnswer()">
         答え合わせ
     </button>
-
 </div>
 
 <div id="result"></div>
-<div class="answer-content" id="answer" hidden>
+	<div class="answer-content" id="answer" hidden>
         <p class="correct-answer">
-          	<strong>RPA↔定型業務の自動化</strong><br>
-          	<strong>SFA／CRM↔顧客情報を一元化</strong><br>
-          	<strong>SCM↔サプライチェーンの最適化 </strong>
+          	<strong>RPA      ↔ 定型業務の自動化</strong><br>
+          	<strong>SFA／CRM ↔ 顧客情報を一元化</strong><br>
+          	<strong>SCM      ↔ サプライチェーンの最適化 </strong>
         </p>
         <p class="explanation">
-        	<strong>解説：</strong><br />
-            	HTMLは「Hyper Text Markupです
-            	Language（ハイパーテキスト・マークアップ・ランゲージ）」の略です。Webページの構造を作成するための言語として使用されます。
-            	<br><a href="index.html">トップページへ</a>
+           	<br><a href="question00.html">次の問題へへ</a>
         </p>
 	</div>
 </div>
-
 <script>
-
 let selectedLeft = null;
-
 const svg = document.getElementById("svg");
-
 const connections = {};
-
 const answers = {
-
     "A":"2",
     "B":"3",
     "C":"1"
-
 };
-
-
 
 // 左選択
 
 document.querySelectorAll(".left").forEach(left=>{
-
     left.addEventListener("click",()=>{
-
         document.querySelectorAll(".left")
         .forEach(l=>l.classList.remove("selected"));
-
         selectedLeft = left;
-
         left.classList.add("selected");
-
     });
-
 });
-
-
 
 // 右選択
 
 document.querySelectorAll(".right").forEach(right=>{
-
     right.addEventListener("click",()=>{
-
         if(selectedLeft == null) return;
-
         const leftId =
             selectedLeft.dataset.id;
-
         const rightId =
             right.dataset.id;
-
         removeLine(leftId);
-
         removeLineByRight(rightId);
-
         drawLine(selectedLeft,right);
-
         connections[leftId] = rightId;
-
         selectedLeft.classList.remove("selected");
-
         selectedLeft = null;
-
     });
-
 });
 
-
-
-
 function drawLine(left,right){
-
     const rect1 =
         left.getBoundingClientRect();
-
     const rect2 =
         right.getBoundingClientRect();
-
     const containerRect =
         document.getElementById("container")
         .getBoundingClientRect();
-
     const x1 =
         rect1.right - containerRect.left;
-
     const y1 =
         rect1.top + rect1.height/2
         - containerRect.top;
-
     const x2 =
         rect2.left - containerRect.left;
-
     const y2 =
         rect2.top + rect2.height/2
         - containerRect.top;
-
     const line =
         document.createElementNS(
             "http://www.w3.org/2000/svg",
             "line"
         );
-
     line.setAttribute("x1",x1);
     line.setAttribute("y1",y1);
 
@@ -180,51 +135,29 @@ function drawLine(left,right){
 
     line.dataset.left =
         left.dataset.id;
-
     line.dataset.right =
         right.dataset.id;
-
     svg.appendChild(line);
-
 }
-
-
 
 
 function removeLine(leftId){
-
     document.querySelectorAll("line")
     .forEach(line=>{
-
         if(line.dataset.left == leftId){
-
             line.remove();
-
         }
-
     });
-
 }
-
-
 
 function removeLineByRight(rightId){
-
     document.querySelectorAll("line")
     .forEach(line=>{
-
         if(line.dataset.right == rightId){
-
             line.remove();
-
         }
-
     });
-
 }
-
-
-
 
 function checkAnswer(){
     let correct = true;
